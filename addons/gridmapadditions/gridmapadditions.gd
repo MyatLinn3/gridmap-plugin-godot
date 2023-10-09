@@ -44,7 +44,7 @@ func getMeshChanged(m):
 	mesh = m
 
 func getRadiusChanged(radius):
-	print(radius)
+#	print(radius)
 	r = radius
 
 func getModeChanged(m):
@@ -60,7 +60,7 @@ func _exit_tree():
 
 
 func _handles(object):
-	print("hee")
+#	print("hee")
 	return object is GridMap
 
 func _edit(object):
@@ -116,7 +116,7 @@ func do_brush(camera, event) -> bool:
 
 		var add_pos = null
 		var intersection = null
-		print(hit_pos)
+#		print(hit_pos)
 		if hit_pos.has("position"):
 			add_pos = hit_pos["position"]
 			add_pos.y += 1
@@ -136,7 +136,7 @@ func do_brush(camera, event) -> bool:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
 			push_undo_stack(current_gridmap)
 			undo_redo.create_action("Paint GridMap")
-			undo_redo.add_redo_method(self,"undo_paint_gridmap")
+			undo_redo.add_undo_method(self,"undo_paint_gridmap")
 			mouse_down = true
 			action_captured = true
 		if event.button_index == MOUSE_BUTTON_LEFT and !event.is_pressed():
@@ -156,8 +156,8 @@ func _do_brush(position,intersection):
 #		return
 	else:
 		var idxs = get_circle(current_gridmap,position,r)
-		print(idxs)
-		print(mesh)
+#		print(idxs)
+#		print(mesh)
 		for i in idxs:
 			current_gridmap.set_cell_item(Vector3(i.x, i.y, i.z), mesh, 0)
 #	undo_redo.create_action("Paint GridMap")
@@ -188,17 +188,17 @@ func restore_momento(gm: GridMap, momento: Array) -> void:
 
 func push_undo_stack(gm: GridMap) -> void:
 	var momento = create_momento(gm)
-	if !gm.has_meta('redo_stack'):
-		gm.set_meta('redo_stack', [])
-	var undo_stack = gm.get_meta('redo_stack')
+	if !gm.has_meta('undo_stack'):
+		gm.set_meta('undo_stack', [])
+	var undo_stack = gm.get_meta('undo_stack')
 	undo_stack.push_back(momento)
 	if undo_stack.size() > 20:
 		undo_stack.pop_front()
 
 func pop_undo_stack(gm: GridMap) -> Dictionary:
-	if !gm.has_meta('redo_stack'):
-		gm.set_meta('redo_stack', [])
-	var undo_stack = gm.get_meta('redo_stack')
+	if !gm.has_meta('undo_stack'):
+		gm.set_meta('undo_stack', [])
+	var undo_stack = gm.get_meta('undo_stack')
 	var momento = undo_stack.back()
 	undo_stack.pop_back()
 	return momento
