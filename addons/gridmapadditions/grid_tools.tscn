@@ -1,0 +1,61 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvtpy1xe17m1t"]
+
+[ext_resource type="Script" path="res://addons/gridmapadditions/grid_tools.gd" id="1_fa4ku"]
+
+[node name="GridTools" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fa4ku")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 428.0
+offset_bottom = 211.0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Mode" type="Label" parent="VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Mode "
+
+[node name="options" type="OptionButton" parent="VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 3
+popup/item_0/text = "None"
+popup/item_0/id = 0
+popup/item_1/text = "Radius"
+popup/item_1/id = 1
+popup/item_2/text = "Bucket"
+popup/item_2/id = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Radius" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Radius "
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Mesh "
+
+[node name="MeshSelector" type="OptionButton" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[connection signal="item_selected" from="VBoxContainer/HBoxContainer3/options" to="." method="_on_options_item_selected"]
+[connection signal="text_changed" from="VBoxContainer/HBoxContainer/LineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="item_selected" from="VBoxContainer/HBoxContainer2/MeshSelector" to="." method="_on_mesh_selector_item_selected"]
